@@ -11,5 +11,5 @@
     simply produces no new post.
 -->
 ```
-authentication vs. authorization
+Process vs Thread
 ```
