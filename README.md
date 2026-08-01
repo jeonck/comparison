@@ -17,6 +17,9 @@ pipeline/generate.py
   - for each new term, asks Claude for: an overview, an inline SVG diagram,
     a comparison table, key differences, and "when to use each"
   - writes content/posts/YYYY-MM-DD-....md, one post per term
+  - removes each successfully-published term's line from input/term.md —
+    the code block goes back to blank; a term that fails generation keeps
+    its line so the next run retries it
         │
         ▼  commit & push
 Hugo build → GitHub Pages deploy
@@ -37,8 +40,9 @@ content. If `input/term.md` has no terms queued, the run simply does nothing.
 5. The workflow runs automatically on that commit and publishes the new
    post(s) within a few minutes.
 
-Terms that have already been published stay safe to leave in the file — they
-are skipped by exact-text match, so they won't be re-published.
+Once a term's post is published, its line is removed from the file
+automatically — no need to clean it up by hand. A term that fails generation
+keeps its line, so it's retried on the next run.
 
 To run it manually instead of waiting on the push trigger: GitHub repo →
 Actions tab → "Generate and Deploy" → "Run workflow".

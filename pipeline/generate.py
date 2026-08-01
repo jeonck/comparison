@@ -10,6 +10,10 @@ content/posts/. This pipeline is on-demand only — it runs when input/term.md
 changes (push) or via manual workflow_dispatch. There is no daily schedule and
 no fallback content: an empty input file simply produces no new post.
 
+Once a term's post is written, its line is removed from input/term.md — the
+code block goes back to blank, ready for the next request. A term that fails
+generation keeps its line so the next run retries it automatically.
+
 Usage:
     python pipeline/generate.py [--dry-run]
 
@@ -129,6 +133,23 @@ def read_terms() -> list[str]:
 
 def build_queue(terms: list[str]) -> list[dict]:
     return [{"text": t, "dedup_key": term_hash(t)} for t in terms]
+
+
+def clear_completed_terms(terms: list[str], processed: dict) -> None:
+    """Empty out input/term.md's fenced code block down to whatever failed.
+
+    Once a term's post is written its hash lands in `processed`, so it's
+    dropped from the file entirely — the box goes back to blank, ready for
+    the next request. A term whose generation failed keeps its line so the
+    next run retries it automatically.
+    """
+    remaining = [t for t in terms if term_hash(t) not in processed]
+    text = TERM_FILE.read_text(encoding="utf-8")
+    body = "\n".join(remaining)
+    new_fence = "```\n" + (body + "\n" if body else "") + "```"
+    new_text, count = re.subn(r"```[a-zA-Z]*\n.*?```", new_fence, text, count=1, flags=re.DOTALL)
+    if count:
+        TERM_FILE.write_text(new_text, encoding="utf-8")
 
 
 class FatalAPIError(Exception):
@@ -406,6 +427,9 @@ def main() -> int:
     if new_count:
         state["processed"] = processed
         STATE_FILE.write_text(json.dumps(state, indent=1, sort_keys=True), encoding="utf-8")
+
+    if new_count or skipped_dup:
+        clear_completed_terms(terms, processed)
 
     if fatal_error:
         log(f"\naborted: unrecoverable API error — {fatal_error}")

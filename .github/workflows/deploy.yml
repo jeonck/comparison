@@ -56,7 +56,7 @@ jobs:
         run: |
           git config user.name "comparison-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add content/posts pipeline/state.json
+          git add content/posts pipeline/state.json input/term.md
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "no new post — skipping commit"
