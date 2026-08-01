@@ -1,12 +1,42 @@
-/* Comparison diagrams: inline SVG generated per-post. Scale to the column
-   width instead of the SVG's intrinsic pixel size, and never overflow it
-   (the surrounding artifact/page must never gain horizontal scroll). */
+/* Mini design system for comparison diagrams: two accent colors (one per
+   compared item) plus soft tint variants for fills, layered on top of
+   PaperMod's own theme-vars.css (--theme/--entry/--content/--secondary/
+   --border). Diagrams reference these via var() so they always sit legibly
+   on the current light/dark background instead of shipping their own
+   hardcoded palette. */
+:root {
+  --compare-a: rgb(37, 99, 235);
+  --compare-a-soft: rgba(37, 99, 235, 0.1);
+  --compare-b: rgb(217, 119, 6);
+  --compare-b-soft: rgba(217, 119, 6, 0.12);
+}
+
+:root[data-theme="dark"] {
+  --compare-a: rgb(96, 165, 250);
+  --compare-a-soft: rgba(96, 165, 250, 0.16);
+  --compare-b: rgb(251, 191, 36);
+  --compare-b-soft: rgba(251, 191, 36, 0.16);
+}
+
+/* Comparison diagrams: inline SVG generated per-post, wrapped in a card that
+   matches the site's own post-entry cards (background/border/radius).
+   Scale to the column width instead of the SVG's intrinsic pixel size, and
+   never overflow it (the surrounding page must never gain horizontal
+   scroll). */
+.compare-diagram {
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
 .post-content svg {
   display: block;
   width: 100%;
   max-width: 640px;
   height: auto;
-  margin: 1.5rem auto;
+  margin: 0 auto;
 }
 
 /* Comparison tables: wrap cell text so the table fits the content width

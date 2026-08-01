@@ -48,10 +48,30 @@ where precision matters. You also design clean, minimal, self-contained SVG \
 diagrams that visually clarify the structural or conceptual difference being \
 compared (e.g. memory layout, architecture boxes, request flow, arrows \
 between components). Diagrams use only basic shapes (rect, circle, line, \
-path, polygon, text) with inline fill/stroke attributes — no external fonts, \
-images, CSS classes, or scripts. Use a viewBox of "0 0 640 360" and a \
-readable, moderate-contrast color palette (avoid pure black/white fills so \
-the diagram works on both light and dark page backgrounds)."""
+path, polygon, text) — no external fonts, images, CSS classes, or scripts.
+
+The diagram is embedded directly into the site's page, so it must use the \
+site's own design system instead of inventing colors: every fill/stroke MUST \
+be set via a `style` attribute referencing one of these CSS custom \
+properties (never a hardcoded hex/rgb color, and never presentation \
+attributes like `fill="#..."`):
+
+- var(--primary)   — bold headings/labels (e.g. the two item names)
+- var(--content)   — regular diagram body text
+- var(--secondary) — muted/annotation text (small captions, "free" labels)
+- var(--border)    — neutral dividers, dashed placeholder/empty boxes
+- var(--compare-a) / var(--compare-a-soft) — accent stroke / soft tint fill \
+for every shape belonging to the LEFT (first) compared item
+- var(--compare-b) / var(--compare-b-soft) — accent stroke / soft tint fill \
+for every shape belonging to the RIGHT (second) compared item
+
+Example: <rect style="fill:var(--compare-a-soft);stroke:var(--compare-a)" \
+stroke-width="1.5" .../> — <text style="fill:var(--content)" .../>. Leave the \
+SVG's own background transparent (no full-bleed background rect) — the page \
+already wraps it in a themed card. Use a viewBox of "0 0 640 360". These \
+variables are already defined for both light and dark mode, so following \
+this palette exactly is what keeps every diagram legible and visually \
+consistent across the whole site."""
 
 GENERATE_PROMPT = """Create a side-by-side comparison post for the following \
 IT term/topic: "{term}"
@@ -61,7 +81,7 @@ or after) matching exactly this schema:
 
 {{"title": "Concise comparison title, e.g. 'X vs Y: <short descriptor>'",
  "summary": "2-3 sentence plain-English overview of what is being compared and why the distinction matters",
- "diagram_svg": "A complete, valid, self-contained '<svg>...</svg>' string (viewBox=\\"0 0 640 360\\") that visually illustrates the core structural or conceptual difference. Label both sides clearly with <text> elements. Escape all double quotes and newlines so the value is valid inside this JSON string.",
+ "diagram_svg": "A complete, valid, self-contained '<svg>...</svg>' string (viewBox=\\"0 0 640 360\\") that visually illustrates the core structural or conceptual difference, using ONLY the var(--compare-a)/var(--compare-b)/var(--primary)/var(--content)/var(--secondary)/var(--border) design-system colors described above via style attributes (no hardcoded hex/rgb colors). Label both sides clearly with <text> elements. Escape all double quotes and newlines so the value is valid inside this JSON string.",
  "table_headers": ["Aspect", "<Left item name>", "<Right item name>"],
  "table_rows": [["<aspect 1>", "<left value>", "<right value>"], ["<aspect 2>", "<left value>", "<right value>"], "5 to 8 rows total, covering the most decision-relevant aspects"],
  "key_differences": ["3 to 5 short, specific bullet points on the most important distinctions — no filler"],
@@ -279,7 +299,9 @@ tags: [{tags_str}]
 
 ## {HEADING_DIAGRAM}
 
+<div class="compare-diagram">
 {result['diagram_svg']}
+</div>
 
 ## {HEADING_TABLE}
 
