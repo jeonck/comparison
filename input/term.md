@@ -11,5 +11,5 @@
     simply produces no new post.
 -->
 ```
-SQL (Relational) vs NoSQL (Non-Relational)
+Continuous Delivery vs Continuous Deployment
 ```
