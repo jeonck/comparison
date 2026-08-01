@@ -11,5 +11,5 @@
     simply produces no new post.
 -->
 ```
-Process vs Thread
+SQL (Relational) vs NoSQL (Non-Relational)
 ```
