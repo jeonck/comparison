@@ -202,10 +202,13 @@ def generate_cli(model: str, term: str) -> dict | None:
            "--output-format", "text", "--append-system-prompt", SYSTEM_PROMPT]
     for attempt in (1, 2):
         try:
-            result = subprocess.run(cmd, input=prompt, env=env, timeout=240,
+            result = subprocess.run(cmd, input=prompt, env=env, timeout=420,
                                      capture_output=True, text=True)
-        except subprocess.TimeoutExpired:
-            log(f"  CLI timeout (attempt {attempt})")
+        except subprocess.TimeoutExpired as exc:
+            partial = (exc.stderr or exc.stdout or b"")
+            if isinstance(partial, bytes):
+                partial = partial.decode("utf-8", errors="replace")
+            log(f"  CLI timeout (attempt {attempt})" + (f" — partial output: {partial[:200]!r}" if partial.strip() else ""))
             continue
         if result.returncode != 0:
             err = (result.stderr or result.stdout).strip()
