@@ -11,6 +11,5 @@
     simply produces no new post.
 -->
 ```
-Stack vs Heap
-REST vs GraphQL
+authentication vs. authorization
 ```
