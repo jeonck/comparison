@@ -20,7 +20,7 @@ Env:
                              `claude setup-token`; locally the logged-in
                              `claude` CLI session is used instead)
     ANTHROPIC_API_KEY        required for the api backend
-    CLAUDE_MODEL             generation model (default claude-sonnet-4-6)
+    CLAUDE_MODEL             generation model (default claude-sonnet-5)
 """
 
 import argparse
@@ -345,7 +345,7 @@ def main() -> int:
         log(f"error: unknown JUDGE_BACKEND={backend!r} (claude-code | api)")
         return 1
 
-    model = os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-6")
+    model = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5")
     terms = read_terms()
     queue = build_queue(terms)
     if not queue:
