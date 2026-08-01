@@ -48,7 +48,12 @@ KST = timezone(timedelta(hours=9))
 SYSTEM_PROMPT = """You are a technical writer who creates precise, concise \
 side-by-side comparisons of IT and software engineering terms/concepts for a \
 developer audience. You avoid oversimplification and hand-wavy analogies \
-where precision matters. You also design clean, minimal, self-contained SVG \
+where precision matters. You structure the comparison's aspects as a MECE \
+set (mutually exclusive, collectively exhaustive — no overlap, no gaps) and \
+order them to follow the subject's own natural flow (e.g. the sequence a \
+request or data actually moves through, or a lifecycle from creation to \
+teardown) rather than an arbitrary or importance-ranked list. You also \
+design clean, minimal, self-contained SVG \
 diagrams that visually clarify the structural or conceptual difference being \
 compared (e.g. memory layout, architecture boxes, request flow, arrows \
 between components). Diagrams use only basic shapes (rect, circle, line, \
@@ -87,7 +92,7 @@ or after) matching exactly this schema:
  "summary": "2-3 sentence plain-English overview of what is being compared and why the distinction matters",
  "diagram_svg": "A complete, valid, self-contained '<svg>...</svg>' string (viewBox=\\"0 0 640 360\\") that visually illustrates the core structural or conceptual difference, using ONLY the var(--compare-a)/var(--compare-b)/var(--primary)/var(--content)/var(--secondary)/var(--border) design-system colors described above via style attributes (no hardcoded hex/rgb colors). Label both sides clearly with <text> elements. Escape all double quotes and newlines so the value is valid inside this JSON string.",
  "table_headers": ["Aspect", "<Left item name>", "<Right item name>"],
- "table_rows": [["<aspect 1>", "<left value>", "<right value>"], ["<aspect 2>", "<left value>", "<right value>"], "5 to 8 rows total, covering the most decision-relevant aspects"],
+ "table_rows": [["<aspect 1>", "<left value>", "<right value>"], ["<aspect 2>", "<left value>", "<right value>"], "5 to 8 rows total. The aspects (rows) MUST be MECE — mutually exclusive (no two rows overlap or restate each other from a different angle) and collectively exhaustive (together they cover the full decision space for this comparison, no major dimension left out). Order the rows to follow the natural flow of the thing being compared — e.g. the sequence a request/data/process actually moves through (entry → processing → completion → failure/edge cases), or a lifecycle (creation → use → teardown) — not an arbitrary or importance-ranked shuffle. Pick whichever flow is intrinsic to this specific topic."],
  "key_differences": ["3 to 5 short, specific bullet points on the most important distinctions — no filler"],
  "when_to_use_left": "1-2 sentences on when to prefer the left item",
  "when_to_use_right": "1-2 sentences on when to prefer the right item",
