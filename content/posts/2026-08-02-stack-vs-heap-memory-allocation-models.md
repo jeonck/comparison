@@ -1,0 +1,39 @@
+---
+title: "Stack vs Heap: Memory Allocation Models"
+date: 2026-08-02T04:16:12.514396+09:00
+tags: ["memory-management", "systems-programming", "runtime", "performance"]
+---
+## Overview
+
+The stack and heap are two distinct memory regions used for different allocation strategies at runtime. The stack manages function call frames automatically via a single pointer increment/decrement, while the heap handles dynamic allocations with flexible lifetimes through an allocator. The distinction directly affects allocation speed, data lifetime, size constraints, and thread safety — core considerations in systems, embedded, and performance-sensitive programming.
+
+## Comparison Diagram
+
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg"><rect width="640" height="360" fill="#252535"/><line x1="320" y1="10" x2="320" y2="350" stroke="#666" stroke-width="1"/><text x="160" y="28" text-anchor="middle" font-family="monospace" font-size="17" font-weight="bold" fill="#7eb8f7">STACK</text><text x="42" y="57" font-family="monospace" font-size="9" fill="#888">high</text><line x1="40" y1="62" x2="40" y2="298" stroke="#555" stroke-width="1"/><text x="42" y="308" font-family="monospace" font-size="9" fill="#888">low</text><rect x="70" y="262" width="200" height="38" fill="#2a3550" stroke="#7eb8f7" stroke-width="1.5"/><text x="170" y="286" text-anchor="middle" font-family="monospace" font-size="12" fill="#aac8f0">frame: main()</text><rect x="70" y="219" width="200" height="38" fill="#2a3550" stroke="#7eb8f7" stroke-width="1.5"/><text x="170" y="243" text-anchor="middle" font-family="monospace" font-size="12" fill="#aac8f0">frame: compute(n)</text><rect x="70" y="176" width="200" height="38" fill="#2a3550" stroke="#7eb8f7" stroke-width="1.5"/><text x="170" y="200" text-anchor="middle" font-family="monospace" font-size="12" fill="#aac8f0">frame: factorial(3)</text><polygon points="268,176 280,170 280,182" fill="#a6e3a1"/><text x="283" y="182" font-family="monospace" font-size="10" fill="#a6e3a1">SP</text><rect x="70" y="98" width="200" height="73" fill="#1a1a2a" stroke="#444" stroke-width="1" stroke-dasharray="4,3"/><text x="170" y="139" text-anchor="middle" font-family="monospace" font-size="11" fill="#555">free (unused)</text><line x1="54" y1="100" x2="54" y2="171" stroke="#7eb8f7" stroke-width="1.5"/><polygon points="54,176 50,166 58,166" fill="#7eb8f7"/><text x="57" y="132" font-family="monospace" font-size="9" fill="#7eb8f7">grows</text><text x="60" y="145" font-family="monospace" font-size="9" fill="#7eb8f7">down</text><text x="170" y="326" text-anchor="middle" font-family="monospace" font-size="10" fill="#7eb8f7">LIFO · auto-managed · fast</text><text x="170" y="342" text-anchor="middle" font-family="monospace" font-size="10" fill="#888">~1-8 MB per thread</text><text x="480" y="28" text-anchor="middle" font-family="monospace" font-size="17" font-weight="bold" fill="#f4a4a4">HEAP</text><rect x="340" y="48" width="282" height="264" rx="4" fill="#1e1020" stroke="#f4a4a4" stroke-width="1" stroke-dasharray="5,3"/><rect x="355" y="63" width="85" height="45" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="397" y="90" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">Object</text><rect x="450" y="68" width="75" height="35" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="487" y="90" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">Vec&lt;T&gt;</text><rect x="355" y="118" width="55" height="30" rx="2" fill="#1a1020" stroke="#666" stroke-width="1" stroke-dasharray="3,2"/><text x="382" y="137" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">free</text><rect x="420" y="113" width="110" height="55" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="475" y="145" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">HashMap</text><rect x="355" y="163" width="55" height="40" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="382" y="188" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">Box</text><rect x="420" y="178" width="50" height="30" rx="2" fill="#1a1020" stroke="#666" stroke-width="1" stroke-dasharray="3,2"/><text x="445" y="197" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">free</text><rect x="355" y="213" width="130" height="50" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="420" y="242" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">String data</text><rect x="495" y="218" width="60" height="35" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="525" y="240" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">Arc</text><rect x="355" y="273" width="80" height="25" rx="2" fill="#1a1020" stroke="#666" stroke-width="1" stroke-dasharray="3,2"/><text x="395" y="289" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">free</text><rect x="445" y="268" width="112" height="30" rx="2" fill="#3a2040" stroke="#f4a4a4" stroke-width="1.5"/><text x="501" y="287" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0c0c0">closure data</text><text x="480" y="326" text-anchor="middle" font-family="monospace" font-size="10" fill="#f4a4a4">dynamic · GC/manual · flexible</text><text x="480" y="342" text-anchor="middle" font-family="monospace" font-size="10" fill="#888">limited by OS / RAM</text></svg>
+
+## Comparison Table
+
+| Aspect | Stack | Heap |
+| --- | --- | --- |
+| Allocation mechanism | Pointer decrement — O(1), no bookkeeping | Allocator call (malloc/new) — higher constant, free-list bookkeeping |
+| Deallocation | Automatic on scope/frame exit | Explicit (free/delete) or garbage collector |
+| Data lifetime | Bound to the declaring scope or call frame | Arbitrary; can outlive any function call |
+| Size constraint | Fixed at thread creation (typically 1–8 MB) | Limited only by available virtual memory / RAM |
+| Size known at compile time | Required — compiler must know the type's layout | Not required — length/capacity decided at runtime |
+| Fragmentation | None — LIFO order keeps allocation contiguous | Yes — internal and external fragmentation accumulate over time |
+| Thread ownership | Each thread has its own stack; no synchronization needed | Shared across threads; allocator must serialize internally |
+| Failure mode | Stack overflow → immediate crash (SIGSEGV/signal) | OOM → null / exception / OOM-killer; potentially recoverable |
+
+## Key Differences
+
+- Stack allocation is a single SP register decrement; heap allocation invokes an allocator with metadata updates, free-list traversal, and possible OS syscalls.
+- Stack lifetime is strictly scoped to the function frame — data cannot be returned by pointer from the stack safely; heap memory can be returned, stored globally, or transferred across threads.
+- Each thread has its own stack and needs no locking; the heap is process-wide and requires allocator-level synchronization on every alloc/free.
+- Stack size is fixed and small (set by the OS or linker script); heap can grow dynamically, making it the only viable region for large buffers or runtime-sized collections.
+- Heap fragmentation is a real operational concern in long-lived or allocation-heavy processes; the stack never fragments because it always grows and shrinks from one end in LIFO order.
+
+## When to Use Each
+
+**Stack** — Prefer the stack for local variables, function arguments, and fixed-size value types whose lifetime is bounded by the enclosing scope — it is faster, deterministic, and eliminates entire classes of memory bugs.
+
+**Heap** — Use the heap when data must outlive its creating scope, when the allocation size is unknown at compile time, or when allocating large buffers that would overflow a typical thread stack; it is also required for shared ownership across threads.

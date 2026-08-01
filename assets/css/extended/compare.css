@@ -1,0 +1,24 @@
+/* Comparison diagrams: inline SVG generated per-post. Scale to the column
+   width instead of the SVG's intrinsic pixel size, and never overflow it
+   (the surrounding artifact/page must never gain horizontal scroll). */
+.post-content svg {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin: 1.5rem auto;
+}
+
+/* Comparison tables: allow horizontal scroll on narrow viewports instead of
+   squeezing columns or overflowing the page. */
+.post-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.post-content table th,
+.post-content table td {
+  white-space: nowrap;
+}
