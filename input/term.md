@@ -11,4 +11,19 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
+TCP vs UDP
+HTTP vs HTTPS
+HTTP/2 vs HTTP/3
+IPv4 vs IPv6
+DNS vs DHCP
+Switch vs Router
+Subnet vs VLAN
+Unicast vs Multicast
+OSI Model vs TCP/IP Model
+Static Routing vs Dynamic Routing
+Ping vs Traceroute
+MAC Address vs IP Address
+Full Duplex vs Half Duplex
+Circuit Switching vs Packet Switching
+Latency vs Bandwidth
 ```
