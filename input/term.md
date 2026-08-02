@@ -11,4 +11,7 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
+RBAC vs ABAC
+Role vs ClusterRole
+Terraform vs Ansible
 ```
