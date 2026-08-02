@@ -94,8 +94,8 @@ or after) matching exactly this schema:
  "table_headers": ["Aspect", "<Left item name>", "<Right item name>"],
  "table_rows": [["<aspect 1>", "<left value>", "<right value>"], ["<aspect 2>", "<left value>", "<right value>"], "5 to 8 rows total. The aspects (rows) MUST be MECE — mutually exclusive (no two rows overlap or restate each other from a different angle) and collectively exhaustive (together they cover the full decision space for this comparison, no major dimension left out). Order the rows to follow the natural flow of the thing being compared — e.g. the sequence a request/data/process actually moves through (entry → processing → completion → failure/edge cases), or a lifecycle (creation → use → teardown) — not an arbitrary or importance-ranked shuffle. Pick whichever flow is intrinsic to this specific topic. Plain text only in each cell — no bold/highlight markup."],
  "key_differences": ["3 to 5 short, specific bullet points on the most important distinctions — no filler. In each bullet, wrap ONLY a single short keyword or technical term (1-3 words, same rule as the table cells above) in '<strong class=\\"kw\\">...</strong>' — never a full clause."],
- "when_to_use_left": "1-2 sentences on when to prefer the left item. Wrap the single most important keyword/term (1-3 words) in '<strong class=\\"kw\\">...</strong>'.",
- "when_to_use_right": "1-2 sentences on when to prefer the right item. Wrap the single most important keyword/term (1-3 words) in '<strong class=\\"kw\\">...</strong>'.",
+ "when_to_use_left": [{{"label": "Short 2-5 word scenario name, e.g. 'Shortest Path Finding'", "detail": "One sentence on why the left item fits this scenario specifically"}}, "2 to 4 such items total — distinct concrete scenarios, not restatements of the same point"],
+ "when_to_use_right": [{{"label": "Short 2-5 word scenario name", "detail": "One sentence on why the right item fits this scenario specifically"}}, "2 to 4 such items total, same rule as the left item"],
  "tags": ["2 to 4 kebab-case tags"]}}
 
 Topic: {term}"""
@@ -203,8 +203,23 @@ def parse_result(text: str) -> dict | None:
     diffs = data.get("key_differences") or []
     data["key_differences"] = [str(d) for d in diffs if str(d).strip()] if isinstance(diffs, list) else []
 
-    data["when_to_use_left"] = str(data.get("when_to_use_left", "")).strip()
-    data["when_to_use_right"] = str(data.get("when_to_use_right", "")).strip()
+    def clean_bullets(items) -> list:
+        if not isinstance(items, list):
+            return []
+        out = []
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            label = str(it.get("label", "")).strip()
+            detail = str(it.get("detail", "")).strip()
+            if label and detail:
+                out.append({"label": label, "detail": detail})
+        return out
+
+    data["when_to_use_left"] = clean_bullets(data.get("when_to_use_left"))
+    data["when_to_use_right"] = clean_bullets(data.get("when_to_use_right"))
+    if not data["when_to_use_left"] or not data["when_to_use_right"]:
+        return None
 
     tags = data.get("tags") or []
     data["tags"] = [slugify(str(t)) for t in tags[:4] if str(t).strip()] or ["it-comparison"]
@@ -302,6 +317,9 @@ def write_post(term: str, result: dict, date: datetime) -> Path:
         items = "\n".join(f"- {d}" for d in result["key_differences"])
         diff_section = f"\n## {HEADING_DIFFERENCES}\n\n{items}\n"
 
+    def render_usage_bullets(items: list) -> str:
+        return "\n".join(f"- **{it['label']}**: {it['detail']}" for it in items)
+
     usage_section = ""
     if result["when_to_use_left"] or result["when_to_use_right"]:
         left_name = result["table_headers"][1] if len(result["table_headers"]) > 1 else "the first option"
@@ -309,9 +327,13 @@ def write_post(term: str, result: dict, date: datetime) -> Path:
         usage_section = f"""
 ## {HEADING_USAGE}
 
-**{left_name}** — {result['when_to_use_left']}
+**{left_name}**
 
-**{right_name}** — {result['when_to_use_right']}
+{render_usage_bullets(result['when_to_use_left'])}
+
+**{right_name}**
+
+{render_usage_bullets(result['when_to_use_right'])}
 """
 
     post = f"""---
