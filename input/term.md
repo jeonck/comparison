@@ -11,19 +11,4 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
-Blue-Green Deployment vs Canary Deployment
-CI vs CD
-Docker vs Kubernetes
-GitOps vs Traditional CI/CD
-Immutable Infrastructure vs Mutable Infrastructure
-Service Mesh vs API Gateway
-Helm vs Kustomize
-Liveness Probe vs Readiness Probe
-StatefulSet vs Deployment
-Horizontal Pod Autoscaler vs Vertical Pod Autoscaler
-Trunk-Based Development vs Feature Branching
-Feature Flags vs Feature Branches
-Docker Swarm vs Kubernetes
-Prometheus vs Grafana
-Sidecar Pattern vs Ambassador Pattern
 ```
