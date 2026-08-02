@@ -11,4 +11,16 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
+Two Pointers vs Sliding Window
+BFS vs DFS
+Recursion vs Iteration
+Memoization (Top-Down) vs Tabulation (Bottom-Up)
+Horizontal Scaling vs Vertical Scaling
+Long Polling vs WebSockets vs Server-Sent Events
+Message Queue (Kafka/RabbitMQ) vs REST API (Synchronous)
+Caching Strategy:Cache-Aside vs Write-Through vs Write-Behind
+Concurrency vs Parallelism
+Garbage Collection (GC) vs Manual Memory Management
+Move Fast and Break Things vs Stability and Strict Testing
+Technical Debt Refactoring vs Delivering New Features
 ```
