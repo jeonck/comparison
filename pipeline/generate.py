@@ -89,13 +89,13 @@ Respond with ONLY valid JSON (no markdown code fences, no commentary before \
 or after) matching exactly this schema:
 
 {{"title": "Concise comparison title, e.g. 'X vs Y: <short descriptor>'",
- "summary": "2-3 sentence plain-English overview of what is being compared and why the distinction matters",
+ "summary": "2-3 sentence plain-English overview of what is being compared and why the distinction matters. Wrap the single most important keyword or term for EACH of the two compared items (exactly one per item, so two total in the summary) in '<strong class=\\"kw\\">...</strong>' — 1-3 words each, never a full clause.",
  "diagram_svg": "A complete, valid, self-contained '<svg>...</svg>' string (viewBox=\\"0 0 640 360\\") that visually illustrates the core structural or conceptual difference, using ONLY the var(--compare-a)/var(--compare-b)/var(--primary)/var(--content)/var(--secondary)/var(--border) design-system colors described above via style attributes (no hardcoded hex/rgb colors). Label both sides clearly with <text> elements. Escape all double quotes and newlines so the value is valid inside this JSON string.",
  "table_headers": ["Aspect", "<Left item name>", "<Right item name>"],
  "table_rows": [["<aspect 1>", "<left value>", "<right value>"], ["<aspect 2>", "<left value>", "<right value>"], "5 to 8 rows total. The aspects (rows) MUST be MECE — mutually exclusive (no two rows overlap or restate each other from a different angle) and collectively exhaustive (together they cover the full decision space for this comparison, no major dimension left out). Order the rows to follow the natural flow of the thing being compared — e.g. the sequence a request/data/process actually moves through (entry → processing → completion → failure/edge cases), or a lifecycle (creation → use → teardown) — not an arbitrary or importance-ranked shuffle. Pick whichever flow is intrinsic to this specific topic. Plain text only in each cell — no bold/highlight markup."],
  "key_differences": ["3 to 5 short, specific bullet points on the most important distinctions — no filler. In each bullet, wrap ONLY a single short keyword or technical term (1-3 words, same rule as the table cells above) in '<strong class=\\"kw\\">...</strong>' — never a full clause."],
- "when_to_use_left": "1-2 sentences on when to prefer the left item",
- "when_to_use_right": "1-2 sentences on when to prefer the right item",
+ "when_to_use_left": "1-2 sentences on when to prefer the left item. Wrap the single most important keyword/term (1-3 words) in '<strong class=\\"kw\\">...</strong>'.",
+ "when_to_use_right": "1-2 sentences on when to prefer the right item. Wrap the single most important keyword/term (1-3 words) in '<strong class=\\"kw\\">...</strong>'.",
  "tags": ["2 to 4 kebab-case tags"]}}
 
 Topic: {term}"""
