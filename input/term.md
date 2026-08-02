@@ -11,19 +11,4 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
-Symmetric Encryption vs Asymmetric Encryption
-Hashing vs Encryption
-TLS vs SSL
-IDS vs IPS
-SAST vs DAST
-Zero Trust vs Perimeter Security
-OAuth vs SAML
-JWT vs Session-Based Authentication
-Firewall vs WAF
-CSRF vs XSS
-Phishing vs Spear Phishing
-Malware vs Ransomware
-VPN vs Proxy
-Digital Signature vs Digital Certificate
-Vulnerability vs Exploit
 ```
