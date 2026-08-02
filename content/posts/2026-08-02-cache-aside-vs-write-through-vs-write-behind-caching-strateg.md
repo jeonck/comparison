@@ -1,0 +1,39 @@
+---
+title: "Cache-Aside vs Write-Through vs Write-Behind: Caching Strategies Compared"
+date: 2026-08-02T23:52:10.716466+09:00
+tags: ["caching", "system-design", "distributed-systems", "performance"]
+---
+## Overview
+
+Caching strategies differ mainly in who updates the cache and when. <strong class="kw">Cache-Aside</strong> leaves the application responsible for loading data into the cache on a miss and writing straight to the database, while <strong class="kw">write-through/write-behind</strong> caches push writes through the cache itself — synchronously for durability or asynchronously for speed. The choice shapes consistency guarantees, crash-safety, and how much write latency the app absorbs.
+
+## Comparison Diagram
+
+<div class="compare-diagram">
+<svg viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrowA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--compare-a)"/></marker><marker id="arrowB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--compare-b)"/></marker></defs><text x="16" y="28" font-size="15" font-weight="bold" style="fill:var(--primary)">Cache-Aside</text><rect x="20" y="50" width="70" height="36" rx="4" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/><text x="55" y="72" text-anchor="middle" font-size="12" style="fill:var(--content)">App</text><rect x="285" y="50" width="80" height="36" rx="4" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/><text x="325" y="72" text-anchor="middle" font-size="12" style="fill:var(--content)">Cache</text><rect x="545" y="50" width="70" height="36" rx="4" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/><text x="580" y="72" text-anchor="middle" font-size="12" style="fill:var(--content)">DB</text><line x1="95" y1="68" x2="280" y2="68" style="stroke:var(--compare-a)" stroke-width="1.5" marker-end="url(#arrowA)"/><text x="185" y="60" text-anchor="middle" font-size="11" style="fill:var(--content)">read</text><line x1="370" y1="68" x2="540" y2="68" stroke-dasharray="5,4" style="stroke:var(--compare-a)" stroke-width="1.5" marker-end="url(#arrowA)" marker-start="url(#arrowA)"/><text x="455" y="95" text-anchor="middle" font-size="10" style="fill:var(--secondary)">on miss: fetch + populate</text><line x1="10" y1="130" x2="630" y2="130" stroke-dasharray="4,4" style="stroke:var(--border)" stroke-width="1"/><text x="16" y="153" font-size="15" font-weight="bold" style="fill:var(--primary)">Write-Through</text><rect x="20" y="168" width="70" height="36" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/><text x="55" y="190" text-anchor="middle" font-size="12" style="fill:var(--content)">App</text><rect x="285" y="168" width="80" height="36" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/><text x="325" y="190" text-anchor="middle" font-size="12" style="fill:var(--content)">Cache</text><rect x="545" y="168" width="70" height="36" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/><text x="580" y="190" text-anchor="middle" font-size="12" style="fill:var(--content)">DB</text><line x1="95" y1="186" x2="280" y2="186" style="stroke:var(--compare-b)" stroke-width="1.5" marker-end="url(#arrowB)"/><text x="185" y="178" text-anchor="middle" font-size="11" style="fill:var(--content)">write</text><line x1="370" y1="186" x2="540" y2="186" style="stroke:var(--compare-b)" stroke-width="1.5" marker-end="url(#arrowB)"/><text x="455" y="178" text-anchor="middle" font-size="11" style="fill:var(--content)">sync write</text><line x1="10" y1="248" x2="630" y2="248" stroke-dasharray="4,4" style="stroke:var(--border)" stroke-width="1"/><text x="16" y="271" font-size="15" font-weight="bold" style="fill:var(--primary)">Write-Behind</text><rect x="20" y="286" width="70" height="36" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/><text x="55" y="308" text-anchor="middle" font-size="12" style="fill:var(--content)">App</text><rect x="285" y="286" width="80" height="36" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/><text x="325" y="308" text-anchor="middle" font-size="12" style="fill:var(--content)">Cache</text><rect x="545" y="286" width="70" height="36" rx="4" stroke-dasharray="4,3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/><text x="580" y="308" text-anchor="middle" font-size="12" style="fill:var(--content)">DB</text><line x1="95" y1="304" x2="280" y2="304" style="stroke:var(--compare-b)" stroke-width="1.5" marker-end="url(#arrowB)"/><text x="185" y="296" text-anchor="middle" font-size="11" style="fill:var(--content)">write (fast ack)</text><line x1="370" y1="304" x2="540" y2="304" stroke-dasharray="5,4" style="stroke:var(--compare-b)" stroke-width="1.5" marker-end="url(#arrowB)"/><text x="455" y="296" text-anchor="middle" font-size="10" style="fill:var(--secondary)">async flush (delayed)</text></svg>
+</div>
+
+## Comparison Table
+
+| Aspect | Cache-Aside | Write-Through / Write-Behind |
+| --- | --- | --- |
+| Read path | App checks the cache first; on a miss, it reads from the DB itself and populates the cache | Cache is always kept current on writes, so reads simply hit the cache without app-managed fallback logic |
+| Write path | App writes directly to the DB; the cache entry is invalidated or left stale until the next read | App writes only to the cache; the cache layer propagates the write to the DB itself |
+| Write latency perceived by app | Only DB write latency, since the cache isn't touched on write | Write-Through waits for both cache and DB commit; Write-Behind returns after the cache write only |
+| Consistency between cache and DB | Brief staleness window possible between invalidation and the next read | Write-Through stays consistent immediately; Write-Behind lags until the queued flush completes |
+| Data loss risk on crash | None — the DB is always the write target, so a cache crash loses nothing | Write-Through has no loss; Write-Behind can lose unflushed writes if the cache crashes before flush |
+| Implementation complexity | App owns miss handling and invalidation logic explicitly | Cache layer owns persistence logic; Write-Behind adds a queue/flush scheduler |
+| Typical use case | Read-heavy workloads with unpredictable key access, e.g. Redis in front of a relational DB | Write-Through suits systems needing instant durability; Write-Behind suits high write-throughput systems tolerant of brief loss, e.g. metrics buffers |
+
+## Key Differences
+
+- Cache-Aside puts the application in charge of both fetch-on-miss and invalidation, while write-through/write-behind push that responsibility into the <strong class="kw">cache layer</strong> itself
+- Only Write-Behind delivers real <strong class="kw">write latency</strong> savings by acknowledging before the DB commit completes
+- Write-Through guarantees immediate durability at write time, while Write-Behind trades some of that <strong class="kw">durability</strong> for throughput
+- Cache-Aside is the only strategy where a cache outage never risks <strong class="kw">data loss</strong>, since writes never pass through it
+
+## When to Use Each
+
+**Cache-Aside** — Use <strong class="kw">Cache-Aside</strong> when reads dominate, access patterns are unpredictable, and you want the database to remain the unquestioned source of truth with minimal coupling to the cache.
+
+**Write-Through / Write-Behind** — Use Write-Through when every write needs immediate consistency and durability, or Write-Behind when write <strong class="kw">throughput</strong> matters more than instant persistence and brief data loss is acceptable.
