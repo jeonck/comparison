@@ -35,6 +35,14 @@ Two Pointers and Sliding Window are both O(n) techniques for scanning arrays or 
 
 ## When to Use Each
 
-**Two Pointers** — Reach for Two Pointers when comparing or pairing elements in sorted or symmetric data, such as two-sum on a sorted array or checking a <strong class="kw">palindrome</strong>.
+**Two Pointers**
 
-**Sliding Window** — Reach for Sliding Window when you need the best contiguous subarray or substring satisfying a running condition, like the longest substring with <strong class="kw">at most k</strong> distinct characters.
+- **Pair-Sum on Sorted Arrays**: Two Pointers converging from both ends finds a target-sum pair in one linear pass once the data is sorted.
+- **Palindrome Checking**: Comparing characters from both ends inward is a direct match for two pointers moving toward each other.
+- **Merging Two Sorted Sequences**: Independent pointers advancing through two arrays in lockstep merge them without extra data structures.
+
+**Sliding Window**
+
+- **Longest/Shortest Substring Under a Constraint**: A window that expands and contracts while tracking a running aggregate directly answers "best contiguous range satisfying X."
+- **Fixed-Size Subarray Aggregates**: Problems like max sum of any k consecutive elements map naturally onto a window of fixed width sliding across the array.
+- **Streaming or Unsorted Input**: Since Sliding Window needs no sorted order, it applies directly to raw sequences where Two Pointers' sorted-input assumption wouldn't hold.

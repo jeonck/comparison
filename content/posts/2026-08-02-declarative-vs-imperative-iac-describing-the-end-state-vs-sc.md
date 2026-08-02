@@ -36,6 +36,14 @@ Declarative IaC (e.g. Terraform, CloudFormation) has you specify the desired end
 
 ## When to Use Each
 
-**Declarative** — Use declarative IaC for provisioning and managing long-lived cloud infrastructure where you want consistent, repeatable state and automatic drift reconciliation (Terraform, CloudFormation, Pulumi).
+**Declarative**
 
-**Imperative** — Use imperative approaches for one-off tasks, complex multi-step orchestration with conditional logic, or configuration steps that don't map cleanly to a state model (bootstrap scripts, Chef recipes, CLI automation).
+- **Long-Lived Cloud Infrastructure Provisioning**: A state file that tracks current vs. desired infrastructure gives consistent, repeatable results across repeated applies, which is what tools like Terraform and CloudFormation are built for.
+- **Automatic Drift Reconciliation**: The built-in plan diff lets teams detect and correct drift by re-running plan/apply instead of manually auditing what changed.
+- **Idempotent, Repeatable Deployments**: Idempotency guaranteed by the engine means re-running the same configuration safely converges to the desired state without hand-written guards.
+
+**Imperative**
+
+- **One-Off Operational Tasks**: A stateless script is simpler for a single ad hoc action that doesn't need lasting drift tracking or a state file.
+- **Complex Multi-Step Orchestration With Conditional Logic**: Because imperative code runs as a sequential interpreter, it fits logic-heavy bootstrap or configuration flows that don't map cleanly to a state model.
+- **Fine-Grained Manual Control Over Ordering**: Authors who need to hand-sequence operations, such as in Chef recipes or CLI automation, get direct control over execution order that declarative engines abstract away.

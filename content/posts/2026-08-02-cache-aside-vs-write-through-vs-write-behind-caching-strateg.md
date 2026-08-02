@@ -34,6 +34,14 @@ Caching strategies differ mainly in who updates the cache and when. <strong clas
 
 ## When to Use Each
 
-**Cache-Aside** — Use <strong class="kw">Cache-Aside</strong> when reads dominate, access patterns are unpredictable, and you want the database to remain the unquestioned source of truth with minimal coupling to the cache.
+**Cache-Aside**
 
-**Write-Through / Write-Behind** — Use Write-Through when every write needs immediate consistency and durability, or Write-Behind when write <strong class="kw">throughput</strong> matters more than instant persistence and brief data loss is acceptable.
+- **Read-Heavy, Unpredictable Access**: Cache-Aside lets the app populate the cache only on demand, well suited to something like Redis in front of a relational DB with keys that aren't reliably predictable.
+- **Database as Unquestioned Source of Truth**: Because writes always go straight to the DB, a cache-aside cache can crash without any risk of data loss.
+- **Minimal Coupling to the Cache**: Choose Cache-Aside when the app should own miss handling and invalidation explicitly, rather than delegate persistence logic to the cache layer.
+
+**Write-Through / Write-Behind**
+
+- **Systems Needing Instant Durability**: Write-Through waits for both cache and DB commit to complete, guaranteeing immediate consistency for critical data.
+- **High-Throughput Writes Tolerant of Brief Loss**: Write-Behind acknowledges after the cache write only, trading some durability for write latency savings, e.g. metrics buffers.
+- **Cache-Managed Persistence**: Use either strategy when the cache layer itself, not the application, should own propagating writes to the database.

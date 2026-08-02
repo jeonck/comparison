@@ -36,6 +36,16 @@ The stack and heap are two distinct memory regions used for different allocation
 
 ## When to Use Each
 
-**Stack** — Prefer the stack for local variables, function arguments, and fixed-size value types whose lifetime is bounded by the enclosing scope — it is faster, deterministic, and eliminates entire classes of memory bugs.
+**Stack**
 
-**Heap** — Use the heap when data must outlive its creating scope, when the allocation size is unknown at compile time, or when allocating large buffers that would overflow a typical thread stack; it is also required for shared ownership across threads.
+- **Local Variables and Function Arguments**: Data whose lifetime is naturally bounded by the enclosing function call belongs on the stack, where it's freed automatically on return.
+- **Fixed-Size, Compile-Time-Known Types**: The compiler must know a type's exact layout to place it on the stack, making it the default for primitives and fixed-size structs.
+- **Performance-Critical, Deterministic Allocation**: A single pointer decrement with no bookkeeping makes stack allocation the fastest option when speed and predictable timing matter.
+- **Thread-Local Data**: Each thread owns its own stack, so thread-local values need no synchronization to allocate or access safely.
+
+**Heap**
+
+- **Data Outliving Its Creating Scope**: Anything that must be returned from a function, stored globally, or passed across threads needs heap allocation since stack memory is invalid after the frame returns.
+- **Runtime-Sized or Unknown-Size Allocations**: When size isn't known until execution (a growable buffer, a collection sized by user input), only the heap can accommodate it.
+- **Large Allocations Beyond Stack Limits**: A typical thread stack is capped at just a few megabytes, so large buffers or big collections must live on the heap to avoid overflow.
+- **Shared Ownership Across Threads**: Structures like `Arc` that multiple threads reference concurrently require heap allocation with a stable address.

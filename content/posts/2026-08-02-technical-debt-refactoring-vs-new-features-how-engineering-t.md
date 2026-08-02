@@ -36,6 +36,14 @@ Every sprint, engineering capacity is split between paying down <strong class="k
 
 ## When to Use Each
 
-**Technical Debt Refactoring** — Prioritize refactoring when <strong class="kw">defect rate</strong> is climbing, deploys are getting riskier, or the next feature is blocked by fragile code that would take longer to build around than to fix.
+**Technical Debt Refactoring**
 
-**New Features** — Prioritize new features when the roadmap has a <strong class="kw">market deadline</strong> and the codebase is stable enough to absorb the change safely without immediate rework.
+- **Rising Defect Rate or Incident Frequency**: When bugs and outages are increasingly traced back to the same fragile code, that's a signal the interest on deferred debt is coming due.
+- **A Feature Is Blocked by Fragile Code**: If working around brittle internals would take longer than fixing them, refactoring first is the faster path to shipping.
+- **Deploys Are Getting Slower or Riskier**: Declining deployment frequency and rising release anxiety point to codebase health issues that only refactoring addresses.
+
+**New Features**
+
+- **Roadmap Has a Market Deadline**: When a competitive window or committed release date is at stake, opportunity cost from delay outweighs incremental code-health gains.
+- **Codebase Is Stable Enough to Absorb Change**: If the system isn't already accumulating incidents, capacity is better spent on user-facing capability than preemptive cleanup.
+- **Stakeholders Need Demoable Progress**: Features provide the visible, adoptable output that's hard to justify skipping in favor of invisible internal work.

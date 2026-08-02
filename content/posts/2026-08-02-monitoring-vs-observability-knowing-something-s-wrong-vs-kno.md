@@ -35,6 +35,14 @@ Monitoring watches a predefined set of metrics, logs, and checks against known f
 
 ## When to Use Each
 
-**Monitoring** — Use monitoring for well-understood, recurring failure modes where you know exactly what to watch — uptime checks, resource saturation, SLA breach alerts.
+**Monitoring**
 
-**Observability** — Invest in observability when your system is complex/distributed enough that failures are novel and multi-causal, and engineers need to ask ad hoc questions during incidents rather than relying on pre-built dashboards.
+- **Well-Understood, Recurring Failures**: Uptime checks, resource saturation, and SLA breach alerts fit monitoring because the failure mode is known in advance and a threshold can be defined for it.
+- **Cost-Sensitive Alerting at Scale**: Aggregated time-series metrics compress well over time, making it cheap to watch thousands of hosts continuously compared to storing raw high-cardinality events.
+- **Simple Health Checks**: A dashboard built around predefined metrics like CPU, memory, or latency p95 is enough when you only need to know whether the system is healthy right now.
+
+**Observability**
+
+- **Complex, Distributed Architectures**: In multi-service systems, failures are often novel and multi-causal, so no pre-built dashboard can anticipate the exact combination that broke.
+- **Investigating Questions You Didn't Anticipate**: High-cardinality telemetry tagged with request ID, user ID, shard, or region lets engineers slice along dimensions not decided when instrumentation was written.
+- **Root-Causing Previously Unseen Failures**: Arbitrary ad hoc queries over traces, logs, and metrics let you find why a specific request or user is behaving oddly, not just that something crossed a threshold.

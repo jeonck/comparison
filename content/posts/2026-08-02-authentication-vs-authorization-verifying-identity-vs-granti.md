@@ -35,6 +35,14 @@ Authentication (AuthN) confirms who a user or system claims to be, typically thr
 
 ## When to Use Each
 
-**Authentication** — Focus on authentication when the problem is proving identity — building or hardening login flows, adding MFA, or integrating SSO/OpenID Connect.
+**Authentication**
 
-**Authorization** — Focus on authorization when the problem is controlling access after identity is known — designing RBAC/ABAC models, API scopes, or per-resource permission checks.
+- **Hardening Login Flows**: Authentication is the layer to strengthen when the goal is proving identity through passwords, biometrics, or hardware keys.
+- **Adding Multi-Factor Authentication**: Layering in MFA improves how credentials are verified, entirely on the authentication side, before any access decision is made.
+- **Integrating SSO or OpenID Connect**: Centralizing identity verification across multiple applications is an authentication concern, built on standards like OpenID Connect and SAML.
+
+**Authorization**
+
+- **Designing RBAC/ABAC Models**: Once identity is confirmed, deciding what a role or attribute set can do is purely an authorization problem.
+- **Scoping OAuth 2.0 API Access**: OAuth 2.0 is an authorization framework, making it the right tool for limiting what a token holder can do, not verifying who they are.
+- **Enforcing Per-Resource Permission Checks**: Authorization is re-evaluated on every sensitive request, so it's the layer to address when a specific resource needs protection beyond the initial login.

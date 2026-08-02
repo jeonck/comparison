@@ -36,6 +36,14 @@ Both are algorithms for visiting every node in a tree or graph, but they differ 
 
 ## When to Use Each
 
-**BFS** — Use <strong class="kw">BFS</strong> when you need the shortest path or want to process nodes in order of distance from the start, such as in unweighted shortest-path search or level-order tree processing.
+**BFS**
 
-**DFS** — Use <strong class="kw">DFS</strong> when memory is constrained relative to graph width, or when the problem naturally involves exploring one path fully before trying alternatives, such as cycle detection or backtracking puzzles.
+- **Shortest Path in Unweighted Graphs**: BFS's level-by-level order guarantees that the first visit to a node comes via the shortest path.
+- **Level-Order Tree Processing**: When output must be organized by distance from the root, BFS's queue naturally produces nodes in that order.
+- **Web Crawling by Hop Count**: BFS suits exploring nearest neighbors first, such as crawling pages a fixed number of links away from a start page.
+
+**DFS**
+
+- **Memory-Constrained Deep Graphs**: DFS's O(depth) memory footprint, versus BFS's O(width), makes it preferable when a graph is narrow but deep.
+- **Topological Sort and Cycle Detection**: These problems rely on DFS's ability to fully explore one branch and backtrack before moving to the next.
+- **Backtracking Puzzles like Mazes**: DFS's stack-based dive-then-backtrack pattern matches problems that require exhausting one path before trying alternatives.

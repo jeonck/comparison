@@ -35,6 +35,14 @@ Both techniques repeat a computation until some condition is met, but they do it
 
 ## When to Use Each
 
-**Recursion** — Reach for <strong class="kw">recursion</strong> when the problem has a naturally recursive structure, like traversing trees, graphs, or applying divide-and-conquer, and the recursion depth stays bounded.
+**Recursion**
 
-**Iteration** — Prefer <strong class="kw">iteration</strong> when memory or performance is tight, the repetition count is large or unbounded, or the language doesn't optimize tail calls.
+- **Tree and graph traversal**: These structures are naturally self-similar, so recursion's stack-frame-per-call model maps directly onto walking children or neighbors without manual bookkeeping.
+- **Divide-and-conquer algorithms**: Problems that split into smaller subproblems (like merge sort) express cleanly as recursive calls where each frame holds its own subproblem state.
+- **Backtracking with bounded depth**: When depth stays bounded, recursion's implicit state storage in each frame's locals is simpler to reason about than manually tracking a stack.
+
+**Iteration**
+
+- **Large or unbounded repetition counts**: Since iteration reuses a single frame with O(1) auxiliary space, it avoids the stack overflow risk recursion faces on deep or unbounded loops.
+- **Performance-sensitive tight loops**: Iteration has no per-level function-call overhead, just a branch back, making it faster than non-tail-call-optimized recursion for simple counting or scans.
+- **Languages without tail-call optimization**: When the runtime won't collapse tail recursion into a loop automatically, writing the loop directly avoids the memory cost recursion would otherwise incur.

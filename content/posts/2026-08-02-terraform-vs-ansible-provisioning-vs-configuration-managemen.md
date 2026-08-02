@@ -35,6 +35,14 @@ Terraform and Ansible are both infrastructure-as-code tools but solve different 
 
 ## When to Use Each
 
-**Terraform** — Use Terraform when you need to create, version, and reliably tear down cloud infrastructure (VMs, networking, managed services) and want a source of truth for what exists.
+**Terraform**
 
-**Ansible** — Use Ansible when you need to install packages, push config files, or orchestrate application deployment across servers that already exist.
+- **Provisioning Cloud Infrastructure**: Creating and tearing down VMs, networks, and managed services is exactly the resource-lifecycle problem Terraform's provider APIs and dependency graph are built for.
+- **Needing a Source of Truth for What Exists**: The state file gives you a queryable record of every resource under management, which Ansible's stateless model doesn't provide.
+- **Parallel, Dependency-Aware Rollouts**: When resources depend on each other, Terraform's graph-based apply creates them in the right order automatically, in parallel where safe.
+
+**Ansible**
+
+- **Configuring Software on Existing Hosts**: Installing packages, writing config files, and starting services on servers that already exist is Ansible's core job, with no infrastructure to provision.
+- **Orchestrating Multi-Server Deployment Steps**: Sequential, ordered task execution across many hosts over SSH suits rollout playbooks better than a declarative state diff.
+- **Agentless Configuration Without Persistent State**: When you don't want to manage a state file and prefer each run to check live system facts directly, Ansible's stateless design fits.

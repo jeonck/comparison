@@ -36,6 +36,16 @@ REST and GraphQL are both HTTP-based API paradigms that differ fundamentally in 
 
 ## When to Use Each
 
-**REST** — Use REST when HTTP semantics matter: public APIs where CDN caching, stateless `GET`-based reads, and broad ecosystem compatibility (browsers, curl, API gateways) are first-class requirements. Also the natural default when each resource type is consumed independently and maps cleanly to standard CRUD verbs.
+**REST**
 
-**GraphQL** — Use GraphQL when clients — especially mobile apps or SPAs — need to fetch heterogeneous, joined data in a single round-trip to minimize latency and bandwidth. It pays off most when multiple clients (iOS, Android, web) have divergent field requirements that would otherwise force over-fetching or proliferating endpoint variants.
+- **Public APIs Needing CDN Caching**: REST's `GET`-based requests cache natively at the CDN and browser level by URL and headers, something GraphQL's POST-based queries can't do without extra tooling.
+- **Simple Resource-Oriented CRUD**: When each resource type is consumed independently and maps cleanly to standard HTTP verbs, REST's one-endpoint-per-resource model needs no extra query layer.
+- **Broad Ecosystem Compatibility**: REST's use of standard HTTP status codes and verbs makes it trivially consumable by browsers, curl, API gateways, and generic HTTP tooling.
+- **Stable, Infrequently-Changing Contracts**: Versioning through new URL paths (`/v2/`) is straightforward when a small, well-known set of clients can migrate on a fixed schedule.
+
+**GraphQL**
+
+- **Multiple Clients With Divergent Data Needs**: When iOS, Android, and web clients each need different fields, GraphQL lets each declare exactly what it wants instead of REST endpoints multiplying to match every variant.
+- **Joined Data in One Round-Trip**: Fetching heterogeneous, related data (e.g. a user plus their posts) in a single query avoids the N+1 round-trips REST requires for related resources.
+- **Rapidly Evolving Schemas**: Additive changes via `@deprecated` keep a single endpoint surface stable, avoiding the churn of REST's URL-versioning scheme.
+- **Runtime-Discoverable APIs**: Built-in introspection (`__schema`, `__type`) lets tooling and client codegen inspect the full type graph without maintaining a separate OpenAPI spec.

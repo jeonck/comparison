@@ -35,6 +35,14 @@ Garbage collection and manual memory management are two strategies for reclaimin
 
 ## When to Use Each
 
-**Garbage Collection** — Choose garbage collection for general application and service development where <strong class="kw">developer productivity</strong> and memory safety outweigh the cost of occasional pauses.
+**Garbage Collection**
 
-**Manual Memory Management** — Choose manual memory management for <strong class="kw">real-time or embedded systems</strong> where deterministic latency and tight memory budgets matter more than convenience.
+- **General Application and Service Development**: Automatic reachability tracing removes the need for explicit free() calls, prioritizing developer productivity over manual bookkeeping.
+- **Codebases Where Memory Safety Is Critical**: GC structurally prevents the dangling pointers, double frees, and use-after-free bugs that plague manually managed code.
+- **Workloads Tolerant of Occasional Pauses**: Nondeterministic collection timing is an acceptable tradeoff when overall throughput matters more than predictable per-operation latency.
+
+**Manual Memory Management**
+
+- **Real-Time and Embedded Systems**: Deterministic release the instant free() runs matters when unpredictable GC pause spikes would violate latency guarantees.
+- **Tight Memory Budgets**: Minimal overhead from allocator bookkeeping alone, without a background collector thread or extra heap headroom, suits memory-constrained environments.
+- **Fine-Grained Control Over Memory Layout**: Full lifecycle ownership from allocation to deallocation lets programmers control layout and timing precisely, which latency-critical systems need.

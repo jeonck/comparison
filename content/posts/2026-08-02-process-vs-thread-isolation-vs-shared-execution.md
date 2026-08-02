@@ -98,6 +98,14 @@ A process is an independently executing program instance with its own private ad
 
 ## When to Use Each
 
-**Process** — Choose separate processes when you need strong fault isolation, independent resource limits, or to run untrusted/unrelated code (e.g. sandboxing a plugin, isolating microservices, or letting one crash not affect others).
+**Process**
 
-**Thread** — Choose threads when you need low-overhead parallelism that shares data tightly within one program, such as handling many concurrent connections or offloading CPU work without duplicating memory.
+- **Sandboxing untrusted code**: Since a crash typically stays contained to its own process, running a plugin or third-party code in a separate process keeps it from taking down the host program.
+- **Isolating independently-failing services**: Microservices or browser tabs run as separate processes so one crashing process doesn't corrupt the memory or state of the others.
+- **Enforcing independent resource limits**: When each workload needs its own file descriptor and memory quota rather than sharing one process's limits, separate processes give that isolation.
+
+**Thread**
+
+- **Handling many concurrent connections**: A web server juggling many simultaneous requests benefits from threads' cheap creation and low context-switch cost compared to spawning a process per request.
+- **Parallelizing CPU work without duplicating memory**: Threads share the same code, data, and heap, so offloading work to worker threads avoids copying memory the way separate processes would require.
+- **Tight in-program data sharing**: When multiple execution units need to read and write the same in-memory state directly (guarded by mutexes), threads avoid the IPC overhead processes would need.

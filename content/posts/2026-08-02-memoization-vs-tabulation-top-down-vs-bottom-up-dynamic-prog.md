@@ -36,6 +36,14 @@ Both techniques avoid redundant recomputation in dynamic programming problems by
 
 ## When to Use Each
 
-**Memoization (Top-Down)** — Use memoization when the recurrence is easiest to express recursively, when only a subset of subproblems is actually needed, or when you want a quick <strong class="kw">caching layer</strong> added to existing recursive code.
+**Memoization (Top-Down)**
 
-**Tabulation (Bottom-Up)** — Use tabulation when you need predictable performance without recursion overhead, want to apply <strong class="kw">space optimization</strong>, or need to guarantee no stack overflow on large inputs.
+- **Sparse Subproblem Space**: When only a subset of subproblems reachable from the initial call actually matters, memoization avoids computing the ones tabulation would fill in regardless.
+- **Quick Retrofit onto Recursive Code**: Adding a cache to an existing recursive function is a smaller code change than restructuring the whole recurrence as an explicit loop.
+- **Recurrence Easiest to Express Recursively**: When the natural recursive definition is simplest to derive first, memoization lets the call stack handle ordering automatically.
+
+**Tabulation (Bottom-Up)**
+
+- **Deep or Large Inputs**: Iterating in a loop instead of recursing avoids the stack overflow risk memoization faces on deep call chains.
+- **Memory-Constrained Environments**: Since the iteration order is known upfront, tabulation enables space optimization, such as keeping only the last few rows instead of a full cache.
+- **Predictable, Overhead-Free Performance**: Array reads and writes with no function-call or stack-frame cost make tabulation preferable when consistent execution cost matters.

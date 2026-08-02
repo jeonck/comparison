@@ -36,6 +36,15 @@ A message queue like Kafka or RabbitMQ decouples services by letting a producer 
 
 ## When to Use Each
 
-**Message Queue (Kafka/RabbitMQ)** — Choose a message queue when services need to be decoupled, throughput is bursty, or you need durable <strong class="kw">event-driven</strong> processing that survives consumer downtime.
+**Message Queue (Kafka/RabbitMQ)**
 
-**REST API (Synchronous)** — Choose REST when the caller needs an <strong class="kw">immediate response</strong>, such as simple CRUD operations or interactive client requests.
+- **Cross-Service Decoupling**: Since producer and consumer are decoupled in time and availability, one side can be down without blocking the other, which fits independently deployed services.
+- **Bursty Traffic Absorption**: The broker buffers messages during spikes, smoothing load instead of the caller hitting timeouts or 429s under a sudden surge.
+- **Background Job Processing**: The fire-and-forget pattern suits async work like sending emails or generating reports, where the caller doesn't need to wait on completion.
+- **Failure-Tolerant Event Streaming**: Unacked messages are automatically redelivered or routed to a dead-letter queue, so transient consumer failures don't lose data the way a failed REST call would.
+
+**REST API (Synchronous)**
+
+- **Interactive Client-Facing Requests**: When the caller needs an immediate response to act on, such as rendering a user's profile, blocking request-response is simpler than waiting on an async message.
+- **Simple CRUD Operations**: Straightforward create/read/update/delete calls map directly onto request-response without needing broker infrastructure.
+- **Calls Requiring an Immediate Result**: Operations like real-time input validation, where the client can't proceed until it gets an answer, need the synchronous response REST provides.

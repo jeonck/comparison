@@ -35,6 +35,14 @@ Blocking and non-blocking I/O differ in what happens to the calling thread when 
 
 ## When to Use Each
 
-**Blocking I/O** — Prefer blocking I/O for simple scripts, CLI tools, or low-concurrency services where straightforward sequential code and easy debugging outweigh raw scalability.
+**Blocking I/O**
 
-**Non-blocking I/O** — Prefer non-blocking I/O for high-concurrency servers such as proxies, chat backends, or API gateways handling thousands of simultaneous connections, where thread-per-connection overhead would be prohibitive.
+- **Simple Scripts and CLI Tools**: Sequential, top-to-bottom blocking calls keep code easy to read and debug when high concurrency isn't a concern.
+- **Low-Concurrency Services**: With only a handful of connections active, the one-thread-per-connection model never reaches the resource overhead that scales linearly with connections.
+- **Straightforward Failure Handling**: Without callback or promise state to track, errors surface in a linear call stack that's simpler to trace than a suspended async chain.
+
+**Non-blocking I/O**
+
+- **High-Concurrency Servers**: Proxies, chat backends, and API gateways handling thousands of simultaneous connections need an event loop to avoid the C10K wall blocking I/O hits.
+- **Resource-Bounded Scaling**: Since overhead stays flat and bounded by CPU cores rather than connection count, non-blocking I/O suits systems where thread-per-connection costs would be prohibitive.
+- **Multiplexing Many Slow Clients**: A single event loop can serve many peers at once, so one slow connection only delays its own event instead of tying up an entire thread.

@@ -36,6 +36,15 @@ Role and ClusterRole are both Kubernetes RBAC objects that define sets of permis
 
 ## When to Use Each
 
-**Role** — Use a Role when permissions should stay confined to a single namespace or team, which keeps the blast radius minimal and matches a least-privilege, per-tenant access model.
+**Role**
 
-**ClusterRole** — Use a ClusterRole when you need to grant access to cluster-scoped resources or non-resource endpoints, or when you want one reusable permission set applied across many namespaces or the whole cluster.
+- **Per-Tenant Namespace Isolation**: A Role's permissions never leak outside its own namespace, keeping blast radius minimal in multi-tenant clusters.
+- **Team-Scoped CI/CD Service Accounts**: When a deployment pipeline only needs to manage pods and configmaps in its own namespace, a Role avoids granting any cluster-wide reach.
+- **Least-Privilege Defaults**: Since Kubernetes ships no built-in Roles, authoring one per namespace forces an explicit, minimal grant rather than inheriting a broad default.
+
+**ClusterRole**
+
+- **Access to Cluster-Scoped Resources**: Granting permissions on nodes, persistentvolumes, or namespaces themselves requires a ClusterRole, since a Role cannot reference them at all.
+- **Non-Resource Endpoint Access**: Rules covering endpoints like /healthz or /metrics can only live in a ClusterRole, since Roles can't reference non-resource URLs.
+- **One Definition Reused Across Namespaces**: Defining permissions once and binding them with a RoleBinding in each namespace avoids duplicating the same rules that a Role would require per namespace.
+- **Composable Permission Sets**: aggregationRule lets a ClusterRole auto-combine rules from other labeled ClusterRoles, useful for building up roles like cluster-admin without hand-maintaining a single rule list.

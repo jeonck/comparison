@@ -36,6 +36,14 @@ Concurrency and parallelism are often used interchangeably, but they describe di
 
 ## When to Use Each
 
-**Concurrency** — Reach for concurrency when work is <strong class="kw">I/O-bound</strong> and you want a program to stay responsive while waiting on network, disk, or user input.
+**Concurrency**
 
-**Parallelism** — Reach for parallelism when work is <strong class="kw">CPU-bound</strong> and multiple cores are available to genuinely speed up computation by splitting it.
+- **I/O-Bound Workloads**: Concurrency keeps a program responsive while waiting on network, disk, or user input, since tasks only need to interleave, not run at the same instant.
+- **Single-Core Environments**: Because concurrency works through context switching, it delivers responsiveness gains even when only one core is available.
+- **Coordinating Many Independent Requests**: Event loops, coroutines, and async/await let one thread structure progress across many in-flight tasks, such as handling concurrent network calls.
+
+**Parallelism**
+
+- **CPU-Bound Computation**: When multiple cores are available, splitting numerical or data-processing work to run simultaneously genuinely increases throughput.
+- **Maximizing Hardware Utilization**: Parallelism via OS threads, multiprocessing, or SIMD units exploits multiple cores or processors instead of a single one.
+- **Batch Data Processing at Scale**: Independent subtasks that don't need to share state are natural candidates for parallel execution, minimizing synchronization overhead.

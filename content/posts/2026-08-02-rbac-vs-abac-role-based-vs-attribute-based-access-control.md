@@ -36,6 +36,14 @@ RBAC and ABAC are two models for deciding whether a subject can perform an actio
 
 ## When to Use Each
 
-**RBAC** — Use RBAC when job functions are well-defined and stable, and you need a simple, easily auditable model — e.g. internal admin tools or systems with a small, fixed set of user types.
+**RBAC**
 
-**ABAC** — Use ABAC when access decisions depend on dynamic context like time, location, or resource ownership — e.g. multi-tenant SaaS, regulated data access, or environments requiring fine-grained, condition-based policies.
+- **Internal admin tools with fixed user types**: When job functions are well-defined and stable, RBAC's static role-to-permission mappings are simple to set up and maintain.
+- **Compliance audits by role**: Because RBAC lets you easily list who holds a given role, it suits systems where auditors need a straightforward answer to "who can do X."
+- **Small, well-understood permission sets**: With few distinct job functions, RBAC avoids the policy-writing overhead of ABAC while still covering all needed access patterns.
+
+**ABAC**
+
+- **Multi-tenant SaaS with per-tenant rules**: ABAC evaluates attributes of the user, resource, and environment per request, letting one policy engine express access that varies by tenant or ownership.
+- **Context-sensitive regulated data access**: When access must factor in time, location, or device — not just who the user is — ABAC's real-time attribute evaluation handles that where RBAC cannot.
+- **Avoiding role explosion**: In systems where RBAC would require an ever-growing number of roles to cover edge cases, ABAC's condition-based rules keep granularity high without proliferating roles.

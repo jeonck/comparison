@@ -78,6 +78,14 @@ These are two opposing engineering cultures for shipping software: one optimizes
 
 ## When to Use Each
 
-**Move Fast and Break Things** — Choose this approach when you're an early-stage team chasing <strong class="kw">product-market fit</strong> and the cost of a bug is far lower than the cost of moving slowly.
+**Move Fast and Break Things**
 
-**Stability and Strict Testing** — Choose this approach for <strong class="kw">high-stakes systems</strong> — financial, medical, or infrastructure — where a single failure carries outsized real-world cost.
+- **Early-stage product search**: When you're still hunting for product-market fit, shipping continuously and letting real users surface issues within hours beats a slow, gated pipeline.
+- **Experimental feature flags**: Features being trialed behind flags benefit from rapid prototyping and fast rollback instead of mandatory e2e suites that slow down learning.
+- **Low cost-of-failure contexts**: If a bug in production is cheap to fix and doesn't harm users badly, the velocity gained from skipping heavy QA outweighs the risk.
+
+**Stability and Strict Testing**
+
+- **Regulated or high-stakes systems**: Financial, medical, or infrastructure software needs mandatory unit, integration, and e2e gates because incidents there carry outsized real-world cost.
+- **High-traffic production services**: Staged rollouts with sign-off gates catch defects in staging before they reach large user bases, avoiding the fallout of a bad continuous deploy.
+- **Long-lived systems needing predictability**: When bugs must be prevented rather than tolerated, upfront design review and thorough test suites keep failures exceptional rather than routine.

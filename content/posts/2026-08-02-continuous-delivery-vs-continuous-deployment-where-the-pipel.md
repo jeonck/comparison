@@ -36,6 +36,14 @@ Both practices extend continuous integration by automatically building, testing,
 
 ## When to Use Each
 
-**Continuous Delivery** — Choose Continuous Delivery when releases need business sign-off, compliance review, or a controlled release schedule, but you still want every change to be deployment-ready at any time.
+**Continuous Delivery**
 
-**Continuous Deployment** — Choose Continuous Deployment when your team has high confidence in automated testing and wants the fastest possible feedback loop from commit to production with no manual bottleneck.
+- **Regulated Industries Needing Sign-off**: The manual approval gate gives compliance or business stakeholders a checkpoint before code reaches production.
+- **Scheduled or Controlled Release Windows**: Since release is manually triggered, teams can hold a ready change until a chosen release window rather than shipping the moment tests pass.
+- **Pausing a Release When Issues Surface**: The final human gate lets a team hold back a release that's built and tested but looks risky, without touching the pipeline itself.
+
+**Continuous Deployment**
+
+- **Mature Engineering Orgs With Strong Test Automation**: High automated test coverage lets teams trust the pipeline enough to skip a manual check before production.
+- **SaaS Products Shipping Multiple Times a Day**: Removing the human gate lets every change that passes the pipeline ship immediately, supporting very frequent small releases.
+- **Fastest Commit-to-Production Feedback Loop**: Teams that prioritize speed over a manual safeguard rely on fast automated rollback and feature flags to manage the higher immediate risk.

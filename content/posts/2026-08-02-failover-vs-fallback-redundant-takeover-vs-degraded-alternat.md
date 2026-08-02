@@ -36,6 +36,14 @@ Failover and fallback both describe what a system does when something breaks, bu
 
 ## When to Use Each
 
-**Failover** — Design for failover when you need continuous, equivalent service from redundant infrastructure, such as database clusters, load-balanced servers, or multi-region deployments.
+**Failover**
 
-**Fallback** — Design for fallback when a specific operation can tolerate a lower-quality but acceptable result, such as serving stale cache data, a default value, or a simplified feature when a dependency is unavailable.
+- **Database Cluster High Availability**: A standby replica identical to the primary takes over on heartbeat failure so queries continue with full functional parity.
+- **Load-Balanced Server Pools**: Health-check-triggered failover swaps a failed server for an equivalent one, keeping client-facing behavior unchanged.
+- **Multi-Region Deployments Needing Continuity**: Because failover operates at the infrastructure/system level, an entire region or data center can fail over without users noticing a functional difference.
+
+**Fallback**
+
+- **Serving Stale Cached Data on API Failure**: A timeout or exception can trigger a switch to the last cached value rather than failing the whole request, accepting reduced freshness for availability.
+- **Graceful Degradation of a Single Feature**: Fallback suits an operation that can tolerate a lower-quality but acceptable result, such as a default value when a dependency is unmet.
+- **Application-Logic Level Resilience**: Since fallback works at the method or service level rather than infrastructure, it fits code paths where a simpler alternative is preferable to an error, and can persist until the root cause is fixed.

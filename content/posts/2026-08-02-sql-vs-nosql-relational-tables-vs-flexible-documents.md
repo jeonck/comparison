@@ -36,6 +36,15 @@ SQL (relational) databases organize data into fixed-schema tables linked by fore
 
 ## When to Use Each
 
-**SQL (Relational)** — Choose SQL when data is highly relational, integrity and consistency are critical (e.g. financial transactions), and you need complex ad-hoc queries or reporting across entities.
+**SQL (Relational)**
 
-**NoSQL (Non-Relational)** — Choose NoSQL when you need horizontal scale, high write throughput, or a rapidly evolving/flexible schema, and can tolerate eventual consistency or manage it at the application layer.
+- **Financial and Transactional Systems**: Strong ACID guarantees across tables make SQL the safer choice when correctness of multi-step transactions (e.g. transfers, orders) can't be compromised.
+- **Complex Reporting and Ad-Hoc Queries**: Standardized SQL with JOINs across normalized tables handles cross-entity queries and reporting workloads that would require manual reference resolution in a document store.
+- **Stable, Well-Understood Data Structures**: When entities and their relationships rarely change shape, schema-on-write enforcement catches data integrity issues at write time rather than downstream.
+
+**NoSQL (Non-Relational)**
+
+- **Rapidly Evolving Record Shapes**: Schema-on-read means documents can differ in shape from record to record with no migration step, suiting products still iterating on their data model.
+- **High-Volume Write Throughput**: NoSQL stores are architected for horizontal sharding across commodity nodes, handling write loads that would push a vertically-scaled SQL database to its limits.
+- **Denormalized, Embedded Related Data**: Embedding related data (like a user's orders) directly in one document avoids joins entirely, trading some duplication for fast single-document reads.
+- **Tolerant of Eventual Consistency**: Workloads that can accept BASE-style eventual consistency gain the availability and partition tolerance NoSQL trades strict ACID guarantees for.

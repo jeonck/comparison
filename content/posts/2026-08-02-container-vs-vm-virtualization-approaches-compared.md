@@ -36,6 +36,16 @@ Containers and virtual machines both let you package and isolate workloads, but 
 
 ## When to Use Each
 
-**Container** — Use containers for fast-scaling microservices, CI/CD pipelines, and any workload where startup speed and packing density matter more than kernel-level isolation.
+**Container**
 
-**VM** — Use VMs when you need strong isolation between untrusted tenants, must run a different OS or kernel than the host, or need to support legacy applications that assume a full dedicated OS.
+- **Fast-Scaling Microservices**: Millisecond startup and megabyte-sized images let orchestrators spin containers up or down quickly to match traffic.
+- **CI/CD Build and Test Pipelines**: Low resource overhead makes it cheap to launch a fresh, throwaway environment for every build or test run.
+- **High-Density Multi-Tenant Hosting**: Sharing the host kernel keeps per-instance overhead low, so a single host can pack hundreds of containers instead of tens of VMs.
+- **Portable Cloud-Native Deployments**: A container image runs the same way across any host with a compatible kernel and engine, simplifying moves between dev, staging, and production.
+
+**VM**
+
+- **Untrusted or Multi-Tenant Workloads**: Hardware-level isolation enforced by a hypervisor gives a stronger security boundary than a shared kernel when tenants can't fully trust each other.
+- **Mixed Operating System Requirements**: Since each VM runs its own full guest OS, it can host a different OS or kernel version than the host machine, which containers cannot do.
+- **Legacy Application Hosting**: A complete guest OS lets VMs run older applications built to assume full control of a dedicated machine, without adapting them to a container runtime.
+- **Compliance-Driven Isolation**: Regulated environments that require separate kernels per workload benefit from the stronger isolation strength VMs provide over containers.

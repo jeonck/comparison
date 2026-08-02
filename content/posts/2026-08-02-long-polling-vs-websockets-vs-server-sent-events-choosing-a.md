@@ -35,6 +35,20 @@ Long polling, WebSockets, and Server-Sent Events are three techniques for pushin
 
 ## When to Use Each
 
-**Long Polling** — Reach for <strong class="kw">WebSockets</strong> when the client also needs to send frequent low-latency messages, such as chat, multiplayer games, or collaborative editing.
+**Long Polling**
 
-**WebSockets** — Choose <strong class="kw">Server-Sent Events</strong> for one-way feeds like notifications, live scores, or dashboards, where plain HTTP infrastructure and automatic reconnects matter more than two-way traffic.
+- **Legacy or Restrictive Networks**: Since it reuses plain HTTP request/response with no protocol upgrade, long polling passes through proxies and firewalls that may block WebSocket handshakes.
+- **Infrequent Updates**: When updates are rare, the round-trip delay of re-issuing requests is an acceptable tradeoff against building persistent-connection infrastructure.
+- **Fallback for Unsupported Clients**: It serves as a simple degrade path when a client or network can't sustain a WebSocket or SSE connection.
+
+**WebSockets**
+
+- **Chat and Multiplayer Games**: Full-duplex messaging over one socket lets either side push data the instant it's ready, which one-way SSE can't do for client input.
+- **Collaborative Editing**: Frequent, low-latency updates in both directions fit a single persistent socket better than repeated HTTP exchanges.
+- **Binary Data Transfer**: Only WebSockets carry binary frames, whereas SSE is restricted to UTF-8 text events.
+
+**Server-Sent Events**
+
+- **One-Way Live Feeds**: Notifications, stock tickers, and dashboards only need server-to-client pushes, which is exactly what SSE provides without WebSocket's added complexity.
+- **Automatic Reconnection Needed**: The EventSource API's built-in reconnect and Last-Event-ID resume avoid hand-rolling the reconnect logic WebSockets and long polling require.
+- **Standard HTTP Infrastructure**: Running over ordinary HTTP means SSE works with existing proxies and servers without needing socket-aware infrastructure.

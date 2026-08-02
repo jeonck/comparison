@@ -36,6 +36,15 @@ Horizontal and vertical scaling are the two fundamental strategies for adding ca
 
 ## When to Use Each
 
-**Horizontal Scaling** — Prefer horizontal scaling when you need <strong class="kw">high availability</strong> and elastic, near-unlimited growth for stateless or distributed workloads.
+**Horizontal Scaling**
 
-**Vertical Scaling** — Prefer vertical scaling for a <strong class="kw">quick capacity boost</strong> on a monolithic or stateful system, like a single database, where redesigning for distribution isn't worth it yet.
+- **Unpredictable Traffic Growth**: With a practically unbounded capacity ceiling, horizontal scaling lets you keep adding commodity nodes as demand grows instead of hitting a hardware wall.
+- **High-Availability Requirements**: Because the pool is redundant, one node failing doesn't take the system down, unlike a single scaled-up machine.
+- **Zero-Downtime Capacity Changes**: New nodes join the pool live, so capacity can grow without the reboot or maintenance window vertical scaling usually needs.
+- **Cloud-Native or Microservice Architectures**: Apps already built stateless or with distributed state fit naturally onto a load-balanced cluster of nodes.
+
+**Vertical Scaling**
+
+- **Legacy Monoliths**: The application can remain unaware of the change since it still runs on one machine, avoiding a costly redesign for distribution.
+- **Single-Node Databases**: Many databases are hard to distribute; adding CPU, RAM, or disk to the existing instance raises capacity without re-architecting.
+- **Short-Term Quick Fixes**: When buying time before a bigger scaling redesign, resizing one machine is faster to implement than standing up clustering and a load balancer.

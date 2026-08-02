@@ -35,6 +35,14 @@ SIGTERM and SIGKILL are both Unix signals used to stop a running process, but th
 
 ## When to Use Each
 
-**SIGTERM** — Use SIGTERM as the default way to stop a process, giving it a chance to shut down cleanly by closing connections, saving state, and exiting child processes.
+**SIGTERM**
 
-**SIGKILL** — Use SIGKILL only when a process ignores SIGTERM or becomes unresponsive, since it forces immediate termination with no cleanup and risks orphaned resources or data corruption.
+- **Default Shutdown Signal**: Tools like `docker stop`, `systemctl stop`, and Kubernetes preStop hooks send SIGTERM first, giving the process a chance to run its own shutdown handler.
+- **Flushing State Before Exit**: When a process needs to flush buffers, close sockets, or release locks cleanly, only SIGTERM's catchable handler provides that window.
+- **Predictable Exit Codes for Monitoring**: Since an unhandled SIGTERM exits with code 143, orchestration and monitoring tooling can distinguish a normal graceful stop from other failure modes.
+
+**SIGKILL**
+
+- **Unresponsive or Hung Processes**: When a process ignores SIGTERM or hangs indefinitely, SIGKILL's kernel-enforced termination guarantees it actually stops.
+- **OOM Killer Reclaiming Memory**: The kernel's out-of-memory killer uses SIGKILL specifically because it cannot be intercepted or delayed by the target process.
+- **Final Escalation After a Grace Period**: Orchestrators like Kubernetes send SIGKILL only after a configured grace period expires post-SIGTERM, accepting the risk of orphaned resources to force termination.
