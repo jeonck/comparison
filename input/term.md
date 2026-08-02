@@ -11,4 +11,19 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
+Machine Learning vs Deep Learning
+Supervised Learning vs Unsupervised Learning
+Classification vs Regression
+CNN vs RNN
+LSTM vs GRU
+Bagging vs Boosting
+Precision vs Recall
+Overfitting vs Underfitting
+Batch Normalization vs Dropout
+Transformer vs RNN
+BERT vs GPT
+Generative Model vs Discriminative Model
+Fine-Tuning vs RAG
+Zero-Shot Learning vs Few-Shot Learning
+Model Quantization vs Model Pruning
 ```
