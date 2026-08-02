@@ -11,4 +11,19 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
+IaaS vs PaaS
+Public Cloud vs Private Cloud
+Multi-Cloud vs Hybrid Cloud
+Serverless vs Containers
+Object Storage vs Block Storage
+CDN vs Origin Server
+Cold Start vs Warm Start
+Spot Instances vs On-Demand Instances
+Availability Zone vs Region
+NAT Gateway vs Internet Gateway
+Snapshot vs Backup
+Managed Database vs Self-Hosted Database
+Load Balancer vs Reverse Proxy
+Edge Computing vs Cloud Computing
+Auto Scaling vs Manual Scaling
 ```
