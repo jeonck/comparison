@@ -1,6 +1,6 @@
 ---
 title: "Switch vs Router: Layer 2 Switching vs Layer 3 Routing"
-date: 2026-08-03T08:00:24.952644+09:00
+date: 2026-08-01T20:05:00+09:00
 tags: ["networking", "switch", "router", "osi-layer"]
 ---
 ## Overview

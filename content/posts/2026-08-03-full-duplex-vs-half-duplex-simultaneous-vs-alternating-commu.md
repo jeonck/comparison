@@ -1,6 +1,6 @@
 ---
 title: "Full Duplex vs Half Duplex: Simultaneous vs Alternating Communication"
-date: 2026-08-03T08:10:01.134289+09:00
+date: 2026-08-01T20:12:00+09:00
 tags: ["networking", "ethernet", "data-transmission", "protocols"]
 ---
 ## Overview

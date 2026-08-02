@@ -1,6 +1,6 @@
 ---
 title: "HTTP vs HTTPS: Plaintext vs Encrypted Web Traffic"
-date: 2026-08-03T07:54:28.033828+09:00
+date: 2026-08-01T20:01:00+09:00
 tags: ["networking", "web-security", "http", "tls"]
 ---
 ## Overview

@@ -1,6 +1,6 @@
 ---
 title: "HTTP/2 vs HTTP/3: Multiplexing Over TCP vs QUIC"
-date: 2026-08-03T07:56:59.626360+09:00
+date: 2026-08-01T20:02:00+09:00
 tags: ["http2", "http3", "quic", "web-performance"]
 ---
 ## Overview

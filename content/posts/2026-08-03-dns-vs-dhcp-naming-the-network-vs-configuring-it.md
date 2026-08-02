@@ -1,6 +1,6 @@
 ---
 title: "DNS vs DHCP: Naming the Network vs Configuring It"
-date: 2026-08-03T07:59:26.162884+09:00
+date: 2026-08-01T20:04:00+09:00
 tags: ["dns", "dhcp", "networking", "protocols"]
 ---
 ## Overview

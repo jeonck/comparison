@@ -1,6 +1,6 @@
 ---
 title: "Latency vs Bandwidth: Delay vs Capacity"
-date: 2026-08-03T08:12:18.126489+09:00
+date: 2026-08-01T20:14:00+09:00
 tags: ["networking", "latency", "bandwidth", "performance"]
 ---
 ## Overview

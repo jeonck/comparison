@@ -1,6 +1,6 @@
 ---
 title: "TCP vs UDP: Reliable Streams vs Fast Datagrams"
-date: 2026-08-03T07:53:47.419992+09:00
+date: 2026-08-01T20:00:00+09:00
 tags: ["networking", "tcp", "udp", "transport-layer"]
 ---
 ## Overview

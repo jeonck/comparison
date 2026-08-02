@@ -1,6 +1,6 @@
 ---
 title: "MAC Address vs IP Address: Hardware Identity vs Network Location"
-date: 2026-08-03T08:08:54.977237+09:00
+date: 2026-08-01T20:11:00+09:00
 tags: ["networking", "mac-address", "ip-address", "osi-model"]
 ---
 ## Overview

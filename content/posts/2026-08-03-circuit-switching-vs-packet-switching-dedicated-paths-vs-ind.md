@@ -1,6 +1,6 @@
 ---
 title: "Circuit Switching vs Packet Switching: Dedicated Paths vs Independent Packets"
-date: 2026-08-03T08:11:18.998668+09:00
+date: 2026-08-01T20:13:00+09:00
 tags: ["networking", "circuit-switching", "packet-switching", "protocols"]
 ---
 ## Overview

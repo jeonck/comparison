@@ -1,6 +1,6 @@
 ---
 title: "Unicast vs Multicast: One-to-One vs One-to-Many Delivery"
-date: 2026-08-03T08:03:07.137934+09:00
+date: 2026-08-01T20:07:00+09:00
 tags: ["networking", "unicast", "multicast", "routing"]
 ---
 ## Overview

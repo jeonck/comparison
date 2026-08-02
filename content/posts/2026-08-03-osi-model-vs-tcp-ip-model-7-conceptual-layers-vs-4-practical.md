@@ -1,6 +1,6 @@
 ---
 title: "OSI Model vs TCP/IP Model: 7 Conceptual Layers vs 4 Practical Layers"
-date: 2026-08-03T08:03:56.251595+09:00
+date: 2026-08-01T20:08:00+09:00
 tags: ["networking", "osi-model", "tcp-ip", "protocols"]
 ---
 ## Overview

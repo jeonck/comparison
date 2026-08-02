@@ -1,6 +1,6 @@
 ---
 title: "Ping vs Traceroute: Testing Reachability vs Mapping the Path"
-date: 2026-08-03T08:07:56.250692+09:00
+date: 2026-08-01T20:10:00+09:00
 tags: ["networking", "icmp", "diagnostics", "troubleshooting"]
 ---
 ## Overview

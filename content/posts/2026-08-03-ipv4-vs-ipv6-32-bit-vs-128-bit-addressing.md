@@ -1,6 +1,6 @@
 ---
 title: "IPv4 vs IPv6: 32-bit vs 128-bit Addressing"
-date: 2026-08-03T07:58:16.832327+09:00
+date: 2026-08-01T20:03:00+09:00
 tags: ["networking", "ipv4", "ipv6", "protocols"]
 ---
 ## Overview

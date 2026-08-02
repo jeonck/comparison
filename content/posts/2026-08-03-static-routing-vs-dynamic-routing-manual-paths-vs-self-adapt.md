@@ -1,6 +1,6 @@
 ---
 title: "Static Routing vs Dynamic Routing: Manual Paths vs Self-Adapting Networks"
-date: 2026-08-03T08:05:23.354796+09:00
+date: 2026-08-01T20:09:00+09:00
 tags: ["networking", "routing", "static-routing", "dynamic-routing"]
 ---
 ## Overview

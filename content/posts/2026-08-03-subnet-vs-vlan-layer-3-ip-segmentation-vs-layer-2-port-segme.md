@@ -1,6 +1,6 @@
 ---
 title: "Subnet vs VLAN: Layer 3 IP Segmentation vs Layer 2 Port Segmentation"
-date: 2026-08-03T08:01:43.117158+09:00
+date: 2026-08-01T20:06:00+09:00
 tags: ["networking", "subnetting", "vlan", "lan-design"]
 ---
 ## Overview
