@@ -11,4 +11,19 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
+Monolithic Architecture vs Microservices Architecture
+Layered Architecture vs Hexagonal Architecture
+CQRS vs CRUD
+Event Sourcing vs State-Based Persistence
+Orchestration vs Choreography
+Synchronous vs Asynchronous Communication
+Shared Database vs Database per Service
+Client-Server vs Peer-to-Peer
+SOA vs Microservices
+Stateless vs Stateful Architecture
+Star Schema vs Snowflake Schema
+Lambda Architecture vs Kappa Architecture
+Broker Topology vs Mediator Topology
+Push vs Pull Architecture
+Strangler Fig Pattern vs Big Bang Migration
 ```
