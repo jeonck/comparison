@@ -186,6 +186,14 @@ def parse_result(text: str) -> dict | None:
     svg = data["diagram_svg"].strip()
     if "<svg" not in svg or "</svg>" not in svg:
         return None
+    # Blank lines inside a raw-HTML block make CommonMark/goldmark stop
+    # treating it as HTML mid-block, so the model's occasional pretty-printed
+    # (multi-line, blank-line-separated) SVG gets torn apart by an injected
+    # <p> around whatever line follows the blank line, orphaning </svg>
+    # inside it and breaking rendering. Strip blank lines unconditionally —
+    # harmless for the already-compact single-line SVGs, required for the
+    # pretty-printed ones.
+    svg = "\n".join(line for line in svg.split("\n") if line.strip() != "")
     data["diagram_svg"] = svg
 
     headers = data.get("table_headers")

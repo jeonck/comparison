@@ -14,41 +14,30 @@ DHCP and DNS are both foundational network services, but they solve different pr
   <text x="170" y="45" text-anchor="middle" font-size="18" style="fill:var(--primary)">DHCP</text>
   <text x="490" y="45" text-anchor="middle" font-size="18" style="fill:var(--primary)">DNS</text>
   <line x1="320" y1="15" x2="320" y2="345" stroke-dasharray="4,4" style="stroke:var(--border)" stroke-width="1"/>
-
   <rect x="40" y="140" width="100" height="50" rx="4" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/>
   <text x="90" y="169" text-anchor="middle" font-size="11" style="fill:var(--content)">Client (no IP)</text>
-
   <rect x="200" y="140" width="100" height="50" rx="4" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/>
   <text x="250" y="163" text-anchor="middle" font-size="11" style="fill:var(--content)">DHCP</text>
   <text x="250" y="177" text-anchor="middle" font-size="11" style="fill:var(--content)">Server</text>
-
   <line x1="140" y1="155" x2="196" y2="155" style="stroke:var(--compare-a)" stroke-width="1.5"/>
   <polygon points="200,155 194,151 194,159" style="fill:var(--compare-a)"/>
   <text x="170" y="146" text-anchor="middle" font-size="9" style="fill:var(--secondary)">DHCPDISCOVER</text>
-
   <line x1="200" y1="175" x2="144" y2="175" style="stroke:var(--compare-a)" stroke-width="1.5"/>
   <polygon points="140,175 146,171 146,179" style="fill:var(--compare-a)"/>
   <text x="170" y="197" text-anchor="middle" font-size="9" style="fill:var(--secondary)">leased IP + gateway</text>
-
   <text x="170" y="230" text-anchor="middle" font-size="10" style="fill:var(--secondary)">local subnet, broadcast</text>
-
   <rect x="360" y="140" width="100" height="50" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="410" y="169" text-anchor="middle" font-size="11" style="fill:var(--content)">Client (has IP)</text>
-
   <rect x="520" y="140" width="100" height="50" rx="4" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="570" y="163" text-anchor="middle" font-size="11" style="fill:var(--content)">DNS</text>
   <text x="570" y="177" text-anchor="middle" font-size="11" style="fill:var(--content)">Resolver</text>
-
   <line x1="460" y1="155" x2="516" y2="155" style="stroke:var(--compare-b)" stroke-width="1.5"/>
   <polygon points="520,155 514,151 514,159" style="fill:var(--compare-b)"/>
   <text x="490" y="146" text-anchor="middle" font-size="9" style="fill:var(--secondary)">example.com?</text>
-
   <line x1="520" y1="175" x2="464" y2="175" style="stroke:var(--compare-b)" stroke-width="1.5"/>
   <polygon points="460,175 466,171 466,179" style="fill:var(--compare-b)"/>
   <text x="490" y="197" text-anchor="middle" font-size="9" style="fill:var(--secondary)">93.184.216.34</text>
-
   <text x="490" y="230" text-anchor="middle" font-size="10" style="fill:var(--secondary)">global, hierarchical</text>
-
   <text x="170" y="280" text-anchor="middle" font-size="11" style="fill:var(--content)">gives device an address</text>
   <text x="490" y="280" text-anchor="middle" font-size="11" style="fill:var(--content)">gives a name an address</text>
 </svg>

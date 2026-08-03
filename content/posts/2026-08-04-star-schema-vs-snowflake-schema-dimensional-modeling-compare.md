@@ -14,10 +14,8 @@ Star schema and snowflake schema are two ways to structure dimension tables arou
   <line x1="320" y1="20" x2="320" y2="340" style="stroke:var(--border)" stroke-width="1" stroke-dasharray="4,4"/>
   <text x="160" y="35" text-anchor="middle" style="fill:var(--primary)" font-size="16" font-weight="bold">Star Schema</text>
   <text x="480" y="35" text-anchor="middle" style="fill:var(--primary)" font-size="16" font-weight="bold">Snowflake Schema</text>
-
   <rect x="135" y="172" width="50" height="36" rx="3" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/>
   <text x="160" y="194" text-anchor="middle" style="fill:var(--content)" font-size="11">Fact</text>
-
   <rect x="130" y="86" width="60" height="28" rx="3" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/>
   <text x="160" y="104" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
   <rect x="130" y="276" width="60" height="28" rx="3" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/>
@@ -26,38 +24,31 @@ Star schema and snowflake schema are two ways to structure dimension tables arou
   <text x="60" y="194" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
   <rect x="230" y="176" width="60" height="28" rx="3" style="fill:var(--compare-a-soft);stroke:var(--compare-a)" stroke-width="1.5"/>
   <text x="260" y="194" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
-
   <line x1="160" y1="172" x2="160" y2="114" style="stroke:var(--compare-a)" stroke-width="1.5"/>
   <line x1="160" y1="208" x2="160" y2="276" style="stroke:var(--compare-a)" stroke-width="1.5"/>
   <line x1="135" y1="190" x2="90" y2="190" style="stroke:var(--compare-a)" stroke-width="1.5"/>
   <line x1="185" y1="190" x2="230" y2="190" style="stroke:var(--compare-a)" stroke-width="1.5"/>
-
   <text x="160" y="335" text-anchor="middle" style="fill:var(--secondary)" font-size="11">Dimensions denormalized, one hop to fact</text>
-
   <rect x="455" y="172" width="50" height="36" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="480" y="194" text-anchor="middle" style="fill:var(--content)" font-size="11">Fact</text>
-
   <rect x="365" y="177" width="50" height="26" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="390" y="194" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
   <rect x="545" y="177" width="50" height="26" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="570" y="194" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
   <line x1="455" y1="190" x2="415" y2="190" style="stroke:var(--compare-b)" stroke-width="1.5"/>
   <line x1="505" y1="190" x2="545" y2="190" style="stroke:var(--compare-b)" stroke-width="1.5"/>
-
   <rect x="450" y="127" width="60" height="26" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="480" y="144" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
   <rect x="450" y="57" width="60" height="26" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="480" y="74" text-anchor="middle" style="fill:var(--content)" font-size="11">Sub</text>
   <line x1="480" y1="172" x2="480" y2="153" style="stroke:var(--compare-b)" stroke-width="1.5"/>
   <line x1="480" y1="127" x2="480" y2="83" style="stroke:var(--compare-b)" stroke-width="1.5"/>
-
   <rect x="450" y="227" width="60" height="26" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="480" y="244" text-anchor="middle" style="fill:var(--content)" font-size="11">Dim</text>
   <rect x="450" y="287" width="60" height="26" rx="3" style="fill:var(--compare-b-soft);stroke:var(--compare-b)" stroke-width="1.5"/>
   <text x="480" y="304" text-anchor="middle" style="fill:var(--content)" font-size="11">Sub</text>
   <line x1="480" y1="208" x2="480" y2="227" style="stroke:var(--compare-b)" stroke-width="1.5"/>
   <line x1="480" y1="253" x2="480" y2="287" style="stroke:var(--compare-b)" stroke-width="1.5"/>
-
   <text x="480" y="335" text-anchor="middle" style="fill:var(--secondary)" font-size="11">Dimensions normalized into sub-tables</text>
 </svg>
 </div>
