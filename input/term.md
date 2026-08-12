@@ -11,7 +11,5 @@
     that fails generation keeps its line so the next run retries it.
 -->
 ```
-1.핵심 개념 및 디자인 차이
-Open Claw:
 확장성: 다양한 플러그인과 방대한 스킬(ClawHub 등) 생태계를 기반으로 여러 에이전트를 유연하게 조율하는 데 강점이 있습니다.
 ```
